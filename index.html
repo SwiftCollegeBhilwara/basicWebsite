@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon Clone - Functional Prototype</title>
+    <title>BCA Course Syllabus | MDSU Ajmer</title>
     <style>
         * {
             margin: 0;
@@ -13,389 +13,274 @@
         }
 
         body {
-            background-color: #eaeded;
-            color: #0f1111;
+            /* Rich corporate academic background color layer */
+            background-color: #f4f6f9;
+            color: #2c3e50;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header Styling */
-        header {
-            background-color: #131921;
+        /* Hero Header section with dark tinted university colors */
+        .hero-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #febd69;
-            cursor: pointer;
+        .hero-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        .search-bar {
-            flex: 1;
-            max-width: 600px;
-            margin: 0 20px;
-            display: flex;
+        .hero-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
 
-        .search-bar input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 4px 0 0 4px;
-            outline: none;
+        .university-badge {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
-        .search-bar button {
-            background-color: #febd69;
-            border: none;
-            padding: 0 15px;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .cart-nav {
-            position: relative;
-            cursor: pointer;
-            padding: 5px 10px;
-            border: 1px solid transparent;
-            transition: border 0.2s;
-        }
-
-        .cart-nav:hover {
-            border: 1px solid white;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -2px;
-            right: 12px;
-            background-color: #f08804;
-            color: black;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* Main Content & Products */
         .container {
-            max-width: 1200px;
-            margin: 20px auto;
+            max-width: 1100px;
+            width: 100%;
+            margin: 40px auto;
             padding: 0 20px;
             flex: 1;
         }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+        .info-card {
+            background: white;
+            border-left: 5px solid #febd69;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        .product-card {
+        /* Semester Card Grid Structure */
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .semester-card {
             background: white;
-            padding: 20px;
-            border-radius: 4px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
         }
 
-        .product-card:hover {
-            transform: translateY(-3px);
+        .semester-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
         }
 
-        .product-img {
-            width: 100%;
-            height: 180px;
-            background-color: #f7f7f7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #aaa;
-            border-radius: 4px;
-            margin-bottom: 15px;
+        .sem-header {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .product-title {
-            font-size: 16px;
+        .sem-header h2 {
+            font-size: 1.3rem;
+            color: #1e3c72;
             font-weight: 600;
-            margin-bottom: 8px;
         }
 
-        .product-price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #b12704;
-            margin-bottom: 15px;
+        .subject-list {
+            list-style: none;
+            padding: 20px;
         }
 
-        .add-btn {
-            background-color: #ffd814;
-            border: 1px solid #fcd200;
-            border-radius: 20px;
-            padding: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-        .add-btn:hover {
-            background-color: #f7ca00;
-        }
-
-        /* Modal Panels (Cart & Checkout) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-box {
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .cart-item {
+        .subject-list li {
+            font-size: 0.95rem;
+            padding: 8px 0;
+            color: #4a5568;
+            border-bottom: 1px dashed #edf2f7;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
         }
 
-        .checkout-btn {
-            background-color: #ffa41c;
-            border: 1px solid #ff9900;
-            border-radius: 8px;
-            padding: 12px;
-            color: black;
-            width: 100%;
+        .subject-list li:last-child {
+            border-bottom: none;
+        }
+
+        .subject-list li::before {
+            content: "•";
+            color: #2a5298;
             font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -0.5em;
         }
 
-        .checkout-btn:hover {
-            background-color: #e69410;
+        .btn-container {
+            padding: 20px;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .hidden { display: none; }
+        .download-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #1e3c72;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #2a5298;
+        }
+
+        footer {
+            background-color: #1a202c;
+            color: #a0aec0;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo" onclick="showSection('products')">amazon.in</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search Amazon-style items...">
-            <button>Search</button>
-        </div>
-        <div class="cart-nav" onclick="openCart()">
-            <span>🛒 Cart</span>
-            <span class="cart-count" id="cartCount">0</span>
-        </div>
-    </header>
+    <div class="hero-header">
+        <div class="university-badge">MDS University, Ajmer</div>
+        <h1>Bachelor of Computer Applications (BCA)</h1>
+        <p>Official Semester-wise Syllabus Portal</p>
+    </div>
 
     <div class="container">
-        <div id="productsSection">
-            <h2 style="margin-bottom: 20px;">Trending Deals</h2>
-            <div class="product-grid" id="productGrid">
+        
+        <div class="info-card">
+            <strong>Note:</strong> Yeh portal Maharshi Dayanand Saraswati University (MDSU) ke standard choice-based credit system (CBCS) aur evaluation parameters ke hisab se designed hai. Niche diye gaye modules se aap official portal links stream access kar sakte hain.
+        </div>
+
+        <div class="semester-grid">
+            
+            <div class="semester-card">
+                <div class="sem-header">
+                    <h2>Semester I</h2>
                 </div>
+                <ul class="subject-list">
+                    <li>Computer Fundamentals & PC Software</li>
+                    <li>Programming in 'C' Language</li>
+                    <li>Mathematical Foundations of Computer Science</li>
+                    <li>Technical Communication & English</li>
+                </ul>
+                <div class="btn-container">
+                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-1 PDF</a>
+                </div>
+            </div>
+
+            <div class="semester-card">
+                <div class="sem-header">
+                    <h2>Semester II</h2>
+                </div>
+                <ul class="subject-list">
+                    <li>Data Structures and File Organization</li>
+                    <li>Object Oriented Programming using C++</li>
+                    <li>Digital Electronics & Logic Architecture</li>
+                    <li>Environmental Studies & Management</li>
+                </ul>
+                <div class="btn-container">
+                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-2 PDF</a>
+                </div>
+            </div>
+
+            <div class="semester-card">
+                <div class="sem-header">
+                    <h2>Semester III</h2>
+                </div>
+                <ul class="subject-list">
+                    <li>Database Management Systems (DBMS)</li>
+                    <li>Java Programming Concepts</li>
+                    <li>Operating System Principles</li>
+                    <li>Computer Graphics & Multimedia</li>
+                </ul>
+                <div class="btn-container">
+                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-3 PDF</a>
+                </div>
+            </div>
+
+            <div class="semester-card">
+                <div class="sem-header">
+                    <h2>Semester IV</h2>
+                </div>
+                <ul class="subject-list">
+                    <li>Web Technology & Advanced HTML</li>
+                    <li>Software Engineering Fundamentals</li>
+                    <li>Optimization Techniques & Stats</li>
+                    <li>System Analysis and Design</li>
+                </ul>
+                <div class="btn-container">
+                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-4 PDF</a>
+                </div>
+            </div>
+
+            <div class="semester-card">
+                <div class="sem-header">
+                    <h2>Semester V</h2>
+                </div>
+                <ul class="subject-list">
+                    <li>Computer Networks & Security</li>
+                    <li>Python Programming Basics</li>
+                    <li>Data Warehousing & Mining</li>
+                    <li>E-Commerce & Digital Marketing</li>
+                </ul>
+                <div class="btn-container">
+                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-5 PDF</a>
+                </div>
+            </div>
+
+            <div class="semester-card">
+                <div class="sem-header">
+                    <h2>Semester VI</h2>
+                </div>
+                <ul class="subject-list">
+                    <li>Cloud Computing Architecture</li>
+                    <li>Information Security & Cyber Laws</li>
+                    <li>Major Project / Thesis Submission</li>
+                    <li>Comprehensive Viva-Voce</li>
+                </ul>
+                <div class="btn-container">
+                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-6 PDF</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box id="cartModal" id="modalContent">
-            <button class="close-btn" onclick="closeModal()">×</button>
-            <div id="cartView">
-                <h3 style="margin-bottom: 15px;">Shopping Cart</h3>
-                <div id="cartItemsContainer"></div>
-                <div style="margin-top: 20px; text-align: right; font-weight: bold;" id="cartTotal">Total: ₹0</div>
-                <button class="checkout-btn" id="proceedToPayBtn" onclick="proceedToCheckout()">Proceed to Buy</button>
-            </div>
+    <footer>
+        <p>© 2026 MDSU Ajmer Portal Study Reference System. All Rights Reserved.</p>
+    </footer>
 
-            <div id="checkoutView" class="hidden">
-                <h3 style="margin-bottom: 15px;">Secure Checkout</h3>
-                <form onsubmit="executePurchase(event)">
-                    <div style="margin-bottom: 12px;">
-                        <label style="display:block; font-size:12px; margin-bottom:4px;">Delivery Address</label>
-                        <input type="text" style="width:100%; padding:8px;" value="123, Tech Park, New Delhi" required>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display:block; font-size:12px; margin-bottom:4px;">Payment Method</label>
-                        <select style="width:100%; padding:8px;">
-                            <option>Pay on Delivery (Cash/UPI)</option>
-                            <option>Simulated Credit Card</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="checkout-btn">Place Your Order</button>
-                </form>
-            </div>
-
-            <div id="successView" class="hidden" style="text-align: center; padding: 20px 0;">
-                <div style="font-size: 40px; color: green; margin-bottom: 10px;">✓</div>
-                <h3>Order Placed Successfully!</h3>
-                <p style="font-size: 14px; color: #555; margin: 10px 0 20px;">Thank you for shopping. Your simulated transaction completed without errors.</p>
-                <button class="add-btn" onclick="resetWorkflow()">Continue Shopping</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Mock Data Strategy 
-        const products = [
-            { id: 101, title: "Wireless Noise Cancelling Earbuds", price: 2999, tag: "Electronics" },
-            { id: 102, title: "Minimalist Smart Watch v4", price: 4500, tag: "Wearables" },
-            { id: 103, title: "Ergonomic Mechanical Keyboard", price: 3200, tag: "Accessories" },
-            { id: 104, title: "Ultra Premium Matte Water Bottle", price: 899, tag: "Lifestyle" }
-        ];
-
-        let cart = [];
-
-        // Render application state dynamically
-        function initApp() {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = products.map(p => `
-                <div class="product-card">
-                    <div>
-                        <div class="product-img">${p.tag} Render</div>
-                        <div class="product-title">${p.title}</div>
-                    </div>
-                    <div>
-                        <div class="product-price">₹${p.price}</div>
-                        <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addToCart(productId) {
-            const item = products.find(p => p.id === productId);
-            const existing = cart.find(c => c.id === productId);
-            
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ ...item, quantity: 1 });
-            }
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const countEl = document.getElementById('cartCount');
-            const totalCount = cart.reduce((acc, obj) => acc + obj.quantity, 0);
-            countEl.innerText = totalCount;
-        }
-
-        // Modal Lifecycle Controllers
-        function openCart() {
-            document.getElementById('modalOverlay').style.display = 'flex';
-            document.getElementById('cartView').classList.remove('hidden');
-            document.getElementById('checkoutView').classList.add('hidden');
-            document.getElementById('successView').classList.add('hidden');
-            
-            renderCartDetails();
-        }
-
-        function renderCartDetails() {
-            const container = document.getElementById('cartItemsContainer');
-            const totalEl = document.getElementById('cartTotal');
-            const buyBtn = document.getElementById('proceedToPayBtn');
-
-            if(cart.length === 0) {
-                container.innerHTML = `<p style="color:#666; padding: 20px 0;">Your Cart is empty.</p>`;
-                totalEl.innerText = "Total: ₹0";
-                buyBtn.disabled = true;
-                buyBtn.style.opacity = 0.5;
-                return;
-            }
-
-            buyBtn.disabled = false;
-            buyBtn.style.opacity = 1;
-            
-            container.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div>
-                        <div style="font-weight:600;">${item.title}</div>
-                        <div style="font-size:12px; color:#555;">Qty: ${item.quantity}</div>
-                    </div>
-                    <div style="font-weight:bold; color:#b12704;">₹${item.price * item.quantity}</div>
-                </div>
-            `).join('');
-
-            const grandTotal = cart.reduce((acc, obj) => acc + (obj.price * obj.quantity), 0);
-            totalEl.innerText = `Total: ₹${grandTotal}`;
-        }
-
-        function proceedToCheckout() {
-            document.getElementById('cartView').classList.add('hidden');
-            document.getElementById('checkoutView').classList.remove('hidden');
-        }
-
-        function executePurchase(event) {
-            event.preventDefault();
-            // Transition state directly to completion view to verify loop consistency
-            document.getElementById('checkoutView').classList.add('hidden');
-            document.getElementById('successView').classList.remove('hidden');
-            
-            // Flush active session storage states safely
-            cart = [];
-            updateCartUI();
-        }
-
-        function resetWorkflow() {
-            closeModal();
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        // Initialize on asset generation sequence
-        initApp();
-    </script>
 </body>
 </html>
