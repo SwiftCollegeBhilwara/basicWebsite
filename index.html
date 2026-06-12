@@ -3,284 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCA Course Syllabus | MDSU Ajmer</title>
+    <title>CoreX - C++ Cloud IDE</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
         }
 
         body {
-            /* Rich corporate academic background color layer */
-            background-color: #f4f6f9;
-            color: #2c3e50;
-            min-height: 100vh;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Navigation Header */
+        header {
+            background-color: #161b22;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .branding h1 {
+            font-size: 1.1rem;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+
+        .lib-badge {
+            background: #21262d;
+            border: 1px solid #30363d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #8b949e;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-run {
+            background-color: #238636;
+            color: white;
+        }
+
+        .btn-run:hover {
+            background-color: #2ea043;
+            box-shadow: 0 0 8px rgba(46, 160, 67, 0.4);
+        }
+
+        .btn-clear {
+            background-color: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+        }
+
+        .btn-clear:hover {
+            background-color: #30363d;
+        }
+
+        /* Workspace Panels Layout */
+        .workspace {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 57px);
+        }
+
+        /* Editor Block */
+        .editor-container {
+            flex: 1.2;
+            background-color: #0d1117;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #30363d;
+        }
+
+        .panel-label {
+            background-color: #161b22;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #8b949e;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-area {
+            flex: 1;
+            background-color: #0d1117;
+            color: #ff79c6;
+            border: none;
+            padding: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+            color: #f8f8f2;
+        }
+
+        /* Terminal Console Block */
+        .terminal-container {
+            flex: 0.8;
+            background-color: #090d13;
             display: flex;
             flex-direction: column;
         }
 
-        /* Hero Header section with dark tinted university colors */
-        .hero-header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .hero-header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .hero-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .university-badge {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 40px auto;
-            padding: 0 20px;
+        .terminal-screen {
             flex: 1;
-        }
-
-        .info-card {
-            background: white;
-            border-left: 5px solid #febd69;
-            padding: 15px 20px;
-            margin-bottom: 30px;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            font-size: 0.95rem;
+            padding: 20px;
+            font-size: 0.9rem;
+            overflow-y: auto;
             line-height: 1.6;
         }
 
-        /* Semester Card Grid Structure */
-        .semester-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+        .system-log {
+            color: #8b949e;
+            margin-bottom: 8px;
         }
 
-        .semester-card {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .stdout {
+            color: #58a6ff;
+            white-space: pre-wrap;
         }
 
-        .semester-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
-        }
-
-        .sem-header {
-            background-color: #f8fafc;
-            padding: 20px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .sem-header h2 {
-            font-size: 1.3rem;
-            color: #1e3c72;
-            font-weight: 600;
-        }
-
-        .subject-list {
-            list-style: none;
-            padding: 20px;
-        }
-
-        .subject-list li {
-            font-size: 0.95rem;
-            padding: 8px 0;
-            color: #4a5568;
-            border-bottom: 1px dashed #edf2f7;
-            display: flex;
-            align-items: center;
-        }
-
-        .subject-list li:last-child {
-            border-bottom: none;
-        }
-
-        .subject-list li::before {
-            content: "•";
-            color: #2a5298;
-            font-weight: bold;
-            display: inline-block; 
-            width: 1em;
-            margin-left: -0.5em;
-        }
-
-        .btn-container {
-            padding: 20px;
-            background-color: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .download-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: #1e3c72;
-            color: white;
-            padding: 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: background 0.2s ease;
-        }
-
-        .download-btn:hover {
-            background-color: #2a5298;
-        }
-
-        footer {
-            background-color: #1a202c;
-            color: #a0aec0;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            margin-top: 40px;
+        .stderr {
+            color: #ff7b72;
+            background: rgba(255, 123, 114, 0.1);
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 3px solid #ff7b72;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="hero-header">
-        <div class="university-badge">MDS University, Ajmer</div>
-        <h1>Bachelor of Computer Applications (BCA)</h1>
-        <p>Official Semester-wise Syllabus Portal</p>
-    </div>
+    <header>
+        <div class="branding">
+            <h1>CoreX C++ Engine</h1>
+            <span class="lib-badge">STL Loaded (v17)</span>
+        </div>
+        <div class="controls">
+            <button class="btn btn-clear" onclick="clearTerminal()">Clear Console</button>
+            <button class="btn btn-run" onclick="compileAndExecute()">▶ Run Code</button>
+        </div>
+    </header>
 
-    <div class="container">
+    <div class="workspace">
         
-        <div class="info-card">
-            <strong>Note:</strong> Yeh portal Maharshi Dayanand Saraswati University (MDSU) ke standard choice-based credit system (CBCS) aur evaluation parameters ke hisab se designed hai. Niche diye gaye modules se aap official portal links stream access kar sakte hain.
+        <div class="editor-container">
+            <div class="panel-label">main.cpp</div>
+            <textarea class="code-area" id="editor" spellcheck="false">#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+    cout << "MDSU BCA Compiler Simulation Active." << endl;
+    
+    vector<string> modules = {"STL", "IOSTREAM", "VECTOR"};
+    cout << "Standard Engine Compiled Successfully." << endl;
+    
+    return 0;
+}</textarea>
         </div>
 
-        <div class="semester-grid">
-            
-            <div class="semester-card">
-                <div class="sem-header">
-                    <h2>Semester I</h2>
-                </div>
-                <ul class="subject-list">
-                    <li>Computer Fundamentals & PC Software</li>
-                    <li>Programming in 'C' Language</li>
-                    <li>Mathematical Foundations of Computer Science</li>
-                    <li>Technical Communication & English</li>
-                </ul>
-                <div class="btn-container">
-                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-1 PDF</a>
-                </div>
+        <div class="terminal-container">
+            <div class="panel-label">Terminal / Compilation Output</div>
+            <div class="terminal-screen" id="terminal">
+                <div class="system-log">[system] CoreX Compiler Console initialized. Ready to execute code blueprints.</div>
             </div>
-
-            <div class="semester-card">
-                <div class="sem-header">
-                    <h2>Semester II</h2>
-                </div>
-                <ul class="subject-list">
-                    <li>Data Structures and File Organization</li>
-                    <li>Object Oriented Programming using C++</li>
-                    <li>Digital Electronics & Logic Architecture</li>
-                    <li>Environmental Studies & Management</li>
-                </ul>
-                <div class="btn-container">
-                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-2 PDF</a>
-                </div>
-            </div>
-
-            <div class="semester-card">
-                <div class="sem-header">
-                    <h2>Semester III</h2>
-                </div>
-                <ul class="subject-list">
-                    <li>Database Management Systems (DBMS)</li>
-                    <li>Java Programming Concepts</li>
-                    <li>Operating System Principles</li>
-                    <li>Computer Graphics & Multimedia</li>
-                </ul>
-                <div class="btn-container">
-                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-3 PDF</a>
-                </div>
-            </div>
-
-            <div class="semester-card">
-                <div class="sem-header">
-                    <h2>Semester IV</h2>
-                </div>
-                <ul class="subject-list">
-                    <li>Web Technology & Advanced HTML</li>
-                    <li>Software Engineering Fundamentals</li>
-                    <li>Optimization Techniques & Stats</li>
-                    <li>System Analysis and Design</li>
-                </ul>
-                <div class="btn-container">
-                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-4 PDF</a>
-                </div>
-            </div>
-
-            <div class="semester-card">
-                <div class="sem-header">
-                    <h2>Semester V</h2>
-                </div>
-                <ul class="subject-list">
-                    <li>Computer Networks & Security</li>
-                    <li>Python Programming Basics</li>
-                    <li>Data Warehousing & Mining</li>
-                    <li>E-Commerce & Digital Marketing</li>
-                </ul>
-                <div class="btn-container">
-                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-5 PDF</a>
-                </div>
-            </div>
-
-            <div class="semester-card">
-                <div class="sem-header">
-                    <h2>Semester VI</h2>
-                </div>
-                <ul class="subject-list">
-                    <li>Cloud Computing Architecture</li>
-                    <li>Information Security & Cyber Laws</li>
-                    <li>Major Project / Thesis Submission</li>
-                    <li>Comprehensive Viva-Voce</li>
-                </ul>
-                <div class="btn-container">
-                    <a href="https://mdsuajmer.ac.in/syllabus.php" target="_blank" class="download-btn">📄 Download Sem-6 PDF</a>
-                </div>
-            </div>
-
         </div>
+
     </div>
 
-    <footer>
-        <p>© 2026 MDSU Ajmer Portal Study Reference System. All Rights Reserved.</p>
-    </footer>
+    <script>
+        function clearTerminal() {
+            document.getElementById('terminal').innerHTML = '<div class="system-log">[system] Console buffer cleared.</div>';
+        }
 
+        function compileAndExecute() {
+            const code = document.getElementById('editor').value;
+            const terminal = document.getElementById('terminal');
+            
+            // Append explicit run initialization log
+            terminal.innerHTML += `<div class="system-log" style="margin-top:10px;">[compiler] g++ -std=c++17 main.cpp -o main...</div>`;
+            
+            setTimeout(() => {
+                // Syntactical Verification Engine Simulation
+                if (!code.includes('#include')) {
+                    terminal.innerHTML += `<div class="stderr">Compilation Error: No library wrappers or preprocessor directives detected. Please add #include &lt;iostream&gt;</div>`;
+                    scrollTerminal();
+                    return;
+                }
+                
+                if (!code.includes('main()')) {
+                    terminal.innerHTML += `<div class="stderr">Linker Error: 'main' token function missing. Execution entry point not found.</div>`;
+                    scrollTerminal();
+                    return;
+                }
+
+                if (code.includes('cout') && !code.includes('std::') && !code.includes('using namespace std;')) {
+                    terminal.innerHTML += `<div class="stderr">Compilation Error: 'cout' was not declared in this scope. Did you forget 'using namespace std;'?</div>`;
+                    scrollTerminal();
+                    return;
+                }
+
+                // Parse cout operations safely
+                let outputBuffer = "";
+                const matches = code.match(/cout\s*<<\s*["']([^"']*)["']/g);
+                
+                if (matches) {
+                    matches.forEach(match => {
+                        const str = match.match(/["']([^"']*)["']/)[1];
+                        outputBuffer += str + "\n";
+                    });
+                } else {
+                    outputBuffer = "Process terminated with exit code 0 (No stream output defined).";
+                }
+
+                terminal.innerHTML += `<div class="stdout">${outputBuffer}</div>`;
+                terminal.innerHTML += `<div class="system-log">[process] Program exited successfully with execution parameters.</div>`;
+                scrollTerminal();
+            }, 600); // UI operational lag animation block
+        }
+
+        function scrollTerminal() {
+            const term = document.getElementById('terminal');
+            term.scrollTop = term.scrollHeight;
+        }
+    </script>
 </body>
 </html>
