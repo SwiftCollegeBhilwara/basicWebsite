@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login - Animation Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-in-out forwards;
+        }
+
+        /* Page Load Animation */
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-container {
+            max-width: 350px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #dbdbdb;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 3px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .logo-area {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logo-area h1 {
+            font-family: 'Style Script', cursive, sans-serif; /* Fallback for prototype */
+            font-style: italic;
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: #262626;
+        }
+
+        .input-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 38px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 9px 8px;
+            font-size: 12px;
+            margin-bottom: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #a8a8a8;
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: #0095f6;
+            border: none;
+            color: white;
+            padding: 7px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #1877f2;
+        }
+
+        /* Click Animation Ripple Effect */
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .divider {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .line {
+            flex: 1;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+
+        .divider-text {
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0 18px;
+            text-transform: uppercase;
+        }
+
+        .fb-login {
+            color: #385185;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: opacity 0.2s;
+        }
+
+        .fb-login:hover {
+            opacity: 0.8;
+        }
+
+        .forgot-password {
+            color: #00376b;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .signup-container {
+            max-width: 350px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #dbdbdb;
+            padding: 20px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #262626;
+            border-radius: 3px;
+        }
+
+        .signup-container a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="logo-area">
+            <h1>Instagram</h1>
+        </div>
+
+        <form class="input-form" onsubmit="handleLogin(event)">
+            <input type="text" placeholder="Phone number, username, or email" class="input-field" required>
+            <input type="password" placeholder="Password" class="input-field" required>
+            <button type="submit" class="login-btn" id="loginBtn">Log in</button>
+        </form>
+
+        <div class="divider">
+            <div class="line"></div>
+            <div class="divider-text">OR</div>
+            <div class="line"></div>
+        </div>
+
+        <a href="#" class="fb-login" onclick="playClickSound()">Log in with Facebook</a>
+        <a href="#" class="forgot-password">Forgot password?</a>
+    </div>
+
+    <div class="signup-container">
+        Don't have an account? <a href="#">Sign up</a>
+    </div>
+
+    <script>
+        // Web Audio API template for generic clean interface click sound
+        function playClickSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(400, audioCtx.currentTime); // Frequency in Hz
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.1);
+            } catch (e) {
+                console.log("Audio contexts are restricted until user interaction.");
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            playClickSound();
+            
+            const btn = document.getElementById('loginBtn');
+            btn.innerText = "Connecting...";
+            btn.style.opacity = "0.7";
+            
+            setTimeout(() => {
+                alert("UI Interaction Demo: Front-end event standard trigger execution.");
+                btn.innerText = "Log in";
+                btn.style.opacity = "1";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
