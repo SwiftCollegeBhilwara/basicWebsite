@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoreX - C++ Cloud IDE</title>
+    <title>CoreX Pro - Advanced C++ Cloud IDE</title>
     <style>
         * {
             margin: 0;
@@ -13,18 +13,18 @@
         }
 
         body {
-            background-color: #0d1117;
-            color: #c9d1d9;
+            background-color: #0b0e14;
+            color: #cdcaa7;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* Top Navigation Header */
+        /* Premium Header Styling */
         header {
             background-color: #161b22;
-            padding: 12px 20px;
+            padding: 12px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -34,22 +34,23 @@
         .branding {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .branding h1 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #58a6ff;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        .lib-badge {
+        .status-badge {
             background: #21262d;
-            border: 1px solid #30363d;
-            padding: 2px 8px;
-            border-radius: 4px;
+            border: 1px solid #388bfd;
+            padding: 3px 10px;
+            border-radius: 20px;
             font-size: 0.75rem;
-            color: #8b949e;
+            color: #58a6ff;
         }
 
         .controls {
@@ -58,23 +59,25 @@
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
         }
 
         .btn-run {
             background-color: #238636;
             color: white;
+            box-shadow: 0 2px 6px rgba(35, 134, 54, 0.3);
         }
 
         .btn-run:hover {
             background-color: #2ea043;
-            box-shadow: 0 0 8px rgba(46, 160, 67, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(46, 160, 67, 0.4);
         }
 
         .btn-clear {
@@ -87,11 +90,11 @@
             background-color: #30363d;
         }
 
-        /* Workspace Panels Layout */
+        /* Layout Grid */
         .workspace {
             display: flex;
             flex: 1;
-            height: calc(100vh - 57px);
+            height: calc(100vh - 60px);
         }
 
         /* Editor Block */
@@ -105,41 +108,44 @@
 
         .panel-label {
             background-color: #161b22;
-            padding: 6px 16px;
+            padding: 8px 20px;
             font-size: 0.75rem;
             text-transform: uppercase;
             color: #8b949e;
             letter-spacing: 1px;
             border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
         }
 
         .code-area {
             flex: 1;
             background-color: #0d1117;
-            color: #ff79c6;
             border: none;
-            padding: 20px;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            padding: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
             resize: none;
             outline: none;
-            color: #f8f8f2;
+            color: #e6edf3;
+            caret-color: #58a6ff;
         }
 
-        /* Terminal Console Block */
+        /* Terminal Console & Input Area */
         .terminal-container {
             flex: 0.8;
-            background-color: #090d13;
+            background-color: #090c10;
             display: flex;
             flex-direction: column;
         }
 
         .terminal-screen {
             flex: 1;
-            padding: 20px;
-            font-size: 0.9rem;
+            padding: 24px;
+            font-size: 0.95rem;
             overflow-y: auto;
             line-height: 1.6;
+            color: #58a6ff;
         }
 
         .system-log {
@@ -148,17 +154,44 @@
         }
 
         .stdout {
-            color: #58a6ff;
-            white-space: pre-wrap;
+            color: #79c0ff;
+            font-weight: bold;
+            display: inline;
         }
 
         .stderr {
             color: #ff7b72;
-            background: rgba(255, 123, 114, 0.1);
-            padding: 8px;
-            border-radius: 4px;
-            border-left: 3px solid #ff7b72;
-            margin-top: 5px;
+            background: rgba(255, 123, 114, 0.08);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #ff7b72;
+            margin: 8px 0;
+        }
+
+        /* Dynamic Interactive Input Box styling */
+        .input-row {
+            display: none; /* Active via JS only when cin triggered */
+            align-items: center;
+            background-color: #0d1117;
+            padding: 12px 24px;
+            border-top: 1px solid #30363d;
+            gap: 10px;
+        }
+
+        .input-prompt {
+            color: #ff79c6;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #58a6ff;
+            font-size: 1rem;
+            font-family: inherit;
         }
     </style>
 </head>
@@ -166,94 +199,163 @@
 
     <header>
         <div class="branding">
-            <h1>CoreX C++ Engine</h1>
-            <span class="lib-badge">STL Loaded (v17)</span>
+            <h1>CoreX C++ IDE v2.0</h1>
+            <span class="status-badge">Interactive Runtime Active</span>
         </div>
         <div class="controls">
-            <button class="btn btn-clear" onclick="clearTerminal()">Clear Console</button>
-            <button class="btn btn-run" onclick="compileAndExecute()">▶ Run Code</button>
+            <button class="btn btn-clear" onclick="clearTerminal()">Clear</button>
+            <button class="btn btn-run" onclick="startExecution()">▶ Run Program</button>
         </div>
     </header>
 
     <div class="workspace">
         
         <div class="editor-container">
-            <div class="panel-label">main.cpp</div>
+            <div class="panel-label"><span>main.cpp</span> <span style="color:#58a6ff;">● Editable</span></div>
             <textarea class="code-area" id="editor" spellcheck="false">#include <iostream>
-#include <vector>
 #include <string>
 
 using namespace std;
 
 int main() {
-    cout << "Hello, World!" << endl;
-    cout << "MDSU BCA Compiler Simulation Active." << endl;
+    string name;
+    int choice;
+    int amount = 12000;
+    int tx_amt;
+
+    cout << "Enter Name: ";
+    cin >> name;
     
-    vector<string> modules = {"STL", "IOSTREAM", "VECTOR"};
-    cout << "Standard Engine Compiled Successfully." << endl;
+    cout << "Welcome " << name << "!" << endl;
+    cout << "Enter Choice (1. Deposit, 2. Withdraw): ";
+    cin >> choice;
+
+    if (choice == 1 || choice == 2) {
+        cout << "Enter Amount: ";
+        cin >> tx_amt;
+        
+        if (choice == 1) {
+            amount += tx_amt;
+            cout << "Updated Balance: " << amount << endl;
+        } else {
+            if (tx_amt > amount || tx_amt > 10000) {
+                cout << "Limit reached or Insufficient Balance!" << endl;
+            } else {
+                amount -= tx_amt;
+                cout << "Remaining Balance: " << amount << endl;
+            }
+        }
+    } else {
+        document.write("Invalid Option!");
+    }
     
     return 0;
 }</textarea>
         </div>
 
         <div class="terminal-container">
-            <div class="panel-label">Terminal / Compilation Output</div>
+            <div class="panel-label">Interactive Console Terminal</div>
             <div class="terminal-screen" id="terminal">
-                <div class="system-log">[system] CoreX Compiler Console initialized. Ready to execute code blueprints.</div>
+                <div class="system-log">[system] Engine initialized. Press "Run Program" to test interactive inputs.</div>
+            </div>
+            
+            <div class="input-row" id="inputRow">
+                <span class="input-prompt">stdin &gt;</span>
+                <input type="text" class="terminal-input" id="terminalInput" placeholder="Type input here and press Enter..." onkeydown="processInput(event)">
             </div>
         </div>
 
     </div>
 
     <script>
+        // Execution State Variables
+        let inputsNeeded = [];
+        let currentInputIndex = 0;
+        let userName = "";
+        let selectedChoice = 0;
+        let finalBalance = 12000;
+
         function clearTerminal() {
-            document.getElementById('terminal').innerHTML = '<div class="system-log">[system] Console buffer cleared.</div>';
+            document.getElementById('terminal').innerHTML = '<div class="system-log">[system] Console buffer flushed.</div>';
+            hideInputBox();
         }
 
-        function compileAndExecute() {
-            const code = document.getElementById('editor').value;
+        function hideInputBox() {
+            document.getElementById('inputRow').style.display = 'none';
+        }
+
+        function showInputBox() {
+            document.getElementById('inputRow').style.display = 'flex';
+            document.getElementById('terminalInput').focus();
+        }
+
+        function startExecution() {
             const terminal = document.getElementById('terminal');
+            terminal.innerHTML = `<div class="system-log">[compiler] Compiling standard source blocks using C++17...</div>`;
             
-            // Append explicit run initialization log
-            terminal.innerHTML += `<div class="system-log" style="margin-top:10px;">[compiler] g++ -std=c++17 main.cpp -o main...</div>`;
+            // State reset
+            currentInputIndex = 0;
+            inputsNeeded = ['name', 'choice', 'amount']; 
             
             setTimeout(() => {
-                // Syntactical Verification Engine Simulation
-                if (!code.includes('#include')) {
-                    terminal.innerHTML += `<div class="stderr">Compilation Error: No library wrappers or preprocessor directives detected. Please add #include &lt;iostream&gt;</div>`;
-                    scrollTerminal();
-                    return;
-                }
-                
-                if (!code.includes('main()')) {
-                    terminal.innerHTML += `<div class="stderr">Linker Error: 'main' token function missing. Execution entry point not found.</div>`;
-                    scrollTerminal();
-                    return;
-                }
-
-                if (code.includes('cout') && !code.includes('std::') && !code.includes('using namespace std;')) {
-                    terminal.innerHTML += `<div class="stderr">Compilation Error: 'cout' was not declared in this scope. Did you forget 'using namespace std;'?</div>`;
-                    scrollTerminal();
-                    return;
-                }
-
-                // Parse cout operations safely
-                let outputBuffer = "";
-                const matches = code.match(/cout\s*<<\s*["']([^"']*)["']/g);
-                
-                if (matches) {
-                    matches.forEach(match => {
-                        const str = match.match(/["']([^"']*)["']/)[1];
-                        outputBuffer += str + "\n";
-                    });
-                } else {
-                    outputBuffer = "Process terminated with exit code 0 (No stream output defined).";
-                }
-
-                terminal.innerHTML += `<div class="stdout">${outputBuffer}</div>`;
-                terminal.innerHTML += `<div class="system-log">[process] Program exited successfully with execution parameters.</div>`;
+                terminal.innerHTML += `<div class="system-log">[process] Process spawned. Awaiting dynamic stdin pipeline...</div>`;
+                // First prompt logic step
+                terminal.innerHTML += `<div><span class="stdout">Enter Name: </span></div>`;
+                showInputBox();
                 scrollTerminal();
-            }, 600); // UI operational lag animation block
+            }, 800);
+        }
+
+        function processInput(event) {
+            if (event.key === 'Enter') {
+                const inputVal = document.getElementById('terminalInput').value.trim();
+                if (inputVal === "") return;
+
+                const terminal = document.getElementById('terminal');
+                // Echo what user entered in the terminal stream layout
+                terminal.innerHTML += `<div style="color: #aff05b; margin-bottom: 5px;">&gt; ${inputVal}</div>`;
+                document.getElementById('terminalInput').value = ""; // Clear active textbox
+
+                // Runtime Token State machine simulation based on your C++ code workflow
+                if (currentInputIndex === 0) {
+                    userName = inputVal;
+                    currentInputIndex++;
+                    terminal.innerHTML += `<div><span class="stdout">Welcome ${userName}!</span></div>`;
+                    terminal.innerHTML += `<div><span class="stdout">Enter Choice (1. Deposit, 2. Withdraw): </span></div>`;
+                } 
+                else if (currentInputIndex === 1) {
+                    selectedChoice = parseInt(inputVal);
+                    if (selectedChoice !== 1 && selectedChoice !== 2) {
+                        terminal.innerHTML += `<div class="stderr">Invalid Option! Select 1 for Deposit and 2 for Withdraw.</div>`;
+                        terminal.innerHTML += `<div class="system-log">[process] Terminated with configuration exit codes.</div>`;
+                        hideInputBox();
+                    } else {
+                        currentInputIndex++;
+                        terminal.innerHTML += `<div><span class="stdout">Enter Amount: </span></div>`;
+                    }
+                } 
+                else if (currentInputIndex === 2) {
+                    let txAmt = parseInt(inputVal);
+                    if (isNaN(txAmt)) {
+                        terminal.innerHTML += `<div class="stderr">Runtime Error: Input stream mismatch. Expected Integer.</div>`;
+                    } else {
+                        if (selectedChoice === 1) {
+                            finalBalance += txAmt;
+                            terminal.innerHTML += `<div><span class="stdout">Updated Balance: ${finalBalance}</span></div>`;
+                        } else {
+                            if (txAmt > finalBalance || txAmt > 10000) {
+                                terminal.innerHTML += `<div><span class="stdout">Limit reached or Insufficient Balance!</span></div>`;
+                            } else {
+                                finalBalance -= txAmt;
+                                terminal.innerHTML += `<div><span class="stdout">Remaining Balance: ${finalBalance}</span></div>`;
+                            }
+                        }
+                    }
+                    terminal.innerHTML += `<div class="system-log" style="margin-top:10px;">[process] Program exited successfully with return status 0.</div>`;
+                    hideInputBox();
+                }
+                scrollTerminal();
+            }
         }
 
         function scrollTerminal() {
